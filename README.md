@@ -1,4 +1,4 @@
-# lab01
+# lab2
 
 ## Setup
 
@@ -25,7 +25,7 @@ Closely read through each file in the `src/` folder in order.
 
 The comments introduce TypeScript fundamentals alongside code examples.
 
-In each file, you'll find some `// EXERCISE` comments. Follow the instructions
+In each file, you'll find some `// TODO` comments. Follow the instructions
 to complete each exercise.
 
 ## Checking Your Work
@@ -40,5 +40,5 @@ This will run each of the exercise files, storing your output in individual file
 
 Then, it diffs against sample solutions in `solution/`. Once you've finished the exercises, the diff should
 complete with no differences found. If you're missing something, take a look at the output, or compare
-individual files (e.g. `output/01_variables_and_types.txt` vs. `solution/01_variables_and_types.txt`) using
+individual files (e.g. `output/01_machine_model_and_aliasing.txt` vs. `solution/01_machine_model_and_aliasing.txt`) using
 the integrated VS Code diff tool (select both files, then right-click and choose "Compare Selected").
