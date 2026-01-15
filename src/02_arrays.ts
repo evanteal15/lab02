@@ -13,6 +13,9 @@
  *   1) Make appendPure truly pure
  *   2) Make removeFirstInPlace actually mutate
  *   3) Fix a subtle impurity bug in sumPure
+ *   4) Use array slicing to extract subarrays
+ *   5) Understand array methods: slice, concat, filter
+ *   6) Practice with array destructuring
  */
 
 // EXERCISE 1: appendPure should return a NEW array with x appended, without mutating input.
@@ -27,7 +30,6 @@ function appendPure(xs: number[], x: number): number[] {
 function removeFirstInPlace(xs: number[]): void {
   // TODO: mutate xs to remove the first element
   // Hint: xs.shift()
-  void xs; // WRONG on purpose
 }
 
 // EXERCISE 3: sumPure must be pure (must not mutate xs).
@@ -38,13 +40,39 @@ function sumPure(xs: number[]): number {
   //   Sorting an array in JS mutates it in place.
   //   Even if sorting doesn't "change the sum", it changes the caller's array order.
   //
-  // Fix strategy:
-  //   - either iterate without sorting
-  //   - or sort a COPY (e.g. const ys = [...xs].sort(...))
   xs.sort((a, b) => a - b); // WRONG on purpose: mutates input
   let total = 0;
   for (const x of xs) total += x;
   return total;
+}
+
+// EXERCISE 4: getMiddleSlice should return a NEW array containing elements from start to end (exclusive).
+// Use array.slice() to create a shallow copy of a portion of the array.
+// slice(start, end) returns elements from index start up to (but not including) end.
+function getMiddleSlice(xs: number[], start: number, end: number): number[] {
+  // TODO: use xs.slice() to return a new array with elements from start to end
+  // Hint: slice() does NOT mutate the original array
+  return xs; // WRONG on purpose: returns entire array
+}
+
+// EXERCISE 5: combineArrays should return a NEW array that combines xs and ys.
+// Use concat() or spread operator. concat() does NOT mutate the original arrays.
+function combineArrays(xs: number[], ys: number[]): number[] {
+  // TODO: return a new array combining xs and ys
+  xs.push(...ys); // WRONG on purpose: mutates xs
+  return xs;
+}
+
+// EXERCISE 6: removeElements should return a NEW array with elements at indices removed.
+// The indices array contains the positions to remove (assume indices are valid and sorted).
+// Hint: Use filter() with index parameter, or build a new array excluding those indices.
+function removeElements(xs: number[], indices: number[]): number[] {
+  // TODO: return new array without elements at the specified indices
+  // Hint: filter((val, idx) => !indices.includes(idx))
+  for (const idx of indices) {
+    xs.splice(idx, 1); // WRONG on purpose: mutates xs
+  }
+  return xs;
 }
 
 function main() {
@@ -62,6 +90,26 @@ function main() {
   const s = sumPure(d);
   console.log("sum:", s); // expect: 6
   console.log("d unchanged:", d.join(",")); // expect: 3,1,2
+
+  // Array slicing exercises
+  const e = [10, 20, 30, 40, 50];
+  const middle = getMiddleSlice(e, 1, 4);
+  console.log("middle slice:", middle.join(",")); // expect: 20,30,40
+  console.log("e unchanged:", e.join(",")); // expect: 10,20,30,40,50
+
+  // Array combination
+  const h1 = [1, 2];
+  const h2 = [3, 4];
+  const combined = combineArrays(h1, h2);
+  console.log("combined:", combined.join(",")); // expect: 1,2,3,4
+  console.log("h1 unchanged:", h1.join(",")); // expect: 1,2
+  console.log("h2 unchanged:", h2.join(",")); // expect: 3,4
+
+  // Remove elements
+  const i = [10, 20, 30, 40, 50];
+  const removed = removeElements(i, [1, 3]);
+  console.log("removed indices 1,3:", removed.join(",")); // expect: 10,30,50
+  console.log("i unchanged:", i.join(",")); // expect: 10,20,30,40,50
 }
 
 main();
