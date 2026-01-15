@@ -1,0 +1,11 @@
+primitive: 10 15
+alias: 15 15
+mutateBox: 107
+reassignBoxLocal: 100
+swapValuesInPlace: 2 1
+original owner: Ada
+original items length: 2
+original first item price: 501
+discounted !== original: true
+original unchanged: 501,700
+discounted prices: 451,630

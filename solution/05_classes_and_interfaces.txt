@@ -1,0 +1,7 @@
+a after deposit: 1250
+a after withdraw: 1050
+a,b after transfer: 1000 550
+caught: true
+[t=1234567890] hello
+[t=1234567890] count=3
+final: 3

@@ -1,0 +1,6 @@
+exercise1: Hello, Ada!
+exercise2: GRACE|R2D2
+exercise3: Hello, Linus! / No name / No name / No name
+pluckId: u1
+dict u2: Grace
+formatId: id=sesh-123

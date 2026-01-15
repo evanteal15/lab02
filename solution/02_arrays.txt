@@ -1,0 +1,5 @@
+a: 1,2,3
+b: 1,2,3,4
+c after removeFirstInPlace: 20,30
+sum: 6
+d unchanged: 3,1,2
