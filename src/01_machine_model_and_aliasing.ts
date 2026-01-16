@@ -51,6 +51,7 @@ function makeBox(v: number): Box {
  */
 function mutateBox(box: Box, delta: number): void {
   // TODO: mutate the object (do not reassign the parameter)
+  box.value += delta;
 }
 
 /**
@@ -72,6 +73,9 @@ function mutateBox(box: Box, delta: number): void {
  */
 function reassignBoxLocal(box: Box, delta: number): void {
   // TODO: reassign local param; do NOT mutate the original caller object
+  let box2 = makeBox(box.value);
+  mutateBox(box2, delta);
+  console.log("reassignBoxLocal: box", box2);
 }
 
 /**
@@ -88,6 +92,9 @@ function reassignBoxLocal(box: Box, delta: number): void {
  */
 function swapValuesInPlace(a: Box, b: Box): void {
   // TODO: swap a.value and b.value
+  let temp = a.value;
+  a.value = b.value;
+  b.value = temp;
 }
 
 function runMachineModel() {
@@ -151,7 +158,7 @@ function makeCart(owner: string, items: Item[]): Cart {
  */
 function shallowCopyCart(cart: Cart): Cart {
   // TODO: return a new cart with a new array of items
-  return cart; // WRONG on purpose: alias bug
+  return makeCart(cart.owner, [...cart.items]); // WRONG on purpose: alias bug
 }
 
 /**
@@ -166,7 +173,10 @@ function shallowCopyCart(cart: Cart): Cart {
  */
 function deepCopyCart(cart: Cart): Cart {
   // TODO: create a new cart with cloned items
-  return shallowCopyCart(cart); // WRONG on purpose
+  return makeCart(
+    cart.owner,
+    cart.items.map((item) => ({ ...item })),
+  ); // WRONG on purpose
 }
 
 /**
@@ -182,10 +192,11 @@ function deepCopyCart(cart: Cart): Cart {
  */
 function applyDiscountSafe(cart: Cart, percent: number): Cart {
   // WRONG on purpose: mutates the input cart
-  for (const item of cart.items) {
-    item.priceCents = Math.round(item.priceCents * 0.9);
+  let cart2: Cart = deepCopyCart(cart);
+  for (const item of cart2.items) {
+    item.priceCents = Math.round(item.priceCents * (1 - percent));
   }
-  return cart;
+  return cart2;
 }
 
 function runAliasing() {
@@ -211,11 +222,11 @@ function runAliasing() {
   console.log("discounted !== original:", discounted !== original); // expect: true
   console.log(
     "original unchanged:",
-    original.items.map((i) => i.priceCents).join(",")
+    original.items.map((i) => i.priceCents).join(","),
   ); // expect: 501,700
   console.log(
     "discounted prices:",
-    discounted.items.map((i) => i.priceCents).join(",")
+    discounted.items.map((i) => i.priceCents).join(","),
   ); // expect: 451,630
 }
 

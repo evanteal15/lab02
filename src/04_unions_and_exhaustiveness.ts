@@ -15,7 +15,7 @@
 
 type Circle = { kind: "circle"; radius: number };
 type Rect = { kind: "rect"; w: number; h: number };
-type Shape = Circle | Rect;
+// type Shape = Circle | Rect;
 
 function assertNever(x: never): never {
   throw new Error("Unexpected object: " + JSON.stringify(x));
@@ -31,8 +31,20 @@ function assertNever(x: never): never {
  */
 function area(s: Shape): number {
   // TODO: implement area using a switch on s.kind
-  void s;
-  return 0; // WRONG on purpose
+  switch (s.kind) {
+    case "circle": {
+      return Math.PI * s.radius * s.radius;
+    }
+    case "rect": {
+      return s.w * s.h;
+    }
+    case "tri": {
+      return s.base * s.height * 0.5;
+    }
+    default: {
+      assertNever(s);
+    }
+  }
 }
 
 /**
@@ -46,8 +58,16 @@ function area(s: Shape): number {
  */
 function describeShape(s: Shape): string {
   // TODO: implement describeShape using a switch on s.kind
-  void s;
-  return "shape"; // WRONG on purpose
+  switch (s.kind) {
+    case "circle":
+      return `circle(r=${s.radius})`;
+    case "rect":
+      return `rect(${s.w} x ${s.h})`;
+    case "tri":
+      return `tri(${s.base} x ${s.height})`;
+    default:
+      assertNever(s);
+  }
 }
 
 /**
@@ -98,8 +118,8 @@ function describeShape(s: Shape): string {
  */
 
 // TODO: Uncomment these lines to start Exercise 3
-// type Triangle = { kind: "tri"; base: number; height: number };
-// type Shape = Circle | Rect | Triangle;
+type Triangle = { kind: "tri"; base: number; height: number };
+type Shape = Circle | Rect | Triangle;
 
 function main() {
   const shapes: Shape[] = [

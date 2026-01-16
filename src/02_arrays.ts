@@ -22,7 +22,7 @@
 function appendPure(xs: number[], x: number): number[] {
   // TODO: return a new array (do not call xs.push)
   // Hint: [ ...xs, x ] creates a new array
-  xs.push(x); // WRONG on purpose
+  xs = [...xs, x]; // WRONG on purpose
   return xs;
 }
 
@@ -30,6 +30,7 @@ function appendPure(xs: number[], x: number): number[] {
 function removeFirstInPlace(xs: number[]): void {
   // TODO: mutate xs to remove the first element
   // Hint: xs.shift()
+  xs.shift();
 }
 
 // EXERCISE 3: sumPure must be pure (must not mutate xs).
@@ -40,7 +41,7 @@ function sumPure(xs: number[]): number {
   //   Sorting an array in JS mutates it in place.
   //   Even if sorting doesn't "change the sum", it changes the caller's array order.
   //
-  xs.sort((a, b) => a - b); // WRONG on purpose: mutates input
+  // xs.sort((a, b) => a - b); // WRONG on purpose: mutates input
   let total = 0;
   for (const x of xs) total += x;
   return total;
@@ -52,15 +53,15 @@ function sumPure(xs: number[]): number {
 function getMiddleSlice(xs: number[], start: number, end: number): number[] {
   // TODO: use xs.slice() to return a new array with elements from start to end
   // Hint: slice() does NOT mutate the original array
-  return xs; // WRONG on purpose: returns entire array
+  return xs.slice(start, end); // WRONG on purpose: returns entire array
 }
 
 // EXERCISE 5: combineArrays should return a NEW array that combines xs and ys.
 // Use concat() or spread operator. concat() does NOT mutate the original arrays.
 function combineArrays(xs: number[], ys: number[]): number[] {
   // TODO: return a new array combining xs and ys
-  xs.push(...ys); // WRONG on purpose: mutates xs
-  return xs;
+  // xs.push(...ys); // WRONG on purpose: mutates xs
+  return xs.concat(ys);
 }
 
 // EXERCISE 6: removeElements should return a NEW array with elements at indices removed.
@@ -69,10 +70,8 @@ function combineArrays(xs: number[], ys: number[]): number[] {
 function removeElements(xs: number[], indices: number[]): number[] {
   // TODO: return new array without elements at the specified indices
   // Hint: filter((val, idx) => !indices.includes(idx))
-  for (const idx of indices) {
-    xs.splice(idx, 1); // WRONG on purpose: mutates xs
-  }
-  return xs;
+
+  return xs.filter((val, idx) => !indices.includes(idx));
 }
 
 function main() {

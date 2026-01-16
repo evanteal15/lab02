@@ -43,7 +43,7 @@ function greet(x: HasName): string {
  */
 function exercise1(): string {
   // TODO: remove `as any` and fix properly
-  const msg = greet({ name: "Ada", age: 20 } as any); // WRONG on purpose
+  const msg = greet({ name: "Ada", age: 20 } as HasName); // WRONG on purpose
   return msg;
 }
 
@@ -51,7 +51,10 @@ class Person {
   constructor(public name: string) {}
 }
 class Robot {
-  constructor(public name: string, public serial: number) {}
+  constructor(
+    public name: string,
+    public serial: number,
+  ) {}
 }
 
 function takesHasName(x: HasName): string {
@@ -70,7 +73,7 @@ function exercise2(): string {
   // TODO: remove `as any` casts
   const p = new Person("Grace");
   const r = new Robot("R2D2", 42);
-  return takesHasName(p as any) + "|" + takesHasName(r as any); // WRONG on purpose
+  return takesHasName(p as HasName) + "|" + takesHasName(r as HasName); // WRONG on purpose
 }
 
 /**
@@ -87,7 +90,12 @@ function exercise2(): string {
  */
 function isHasName(x: unknown): x is HasName {
   // TODO: implement safe runtime check
-  return true; // WRONG on purpose (unsound)
+  return (
+    typeof x === "object" &&
+    x != null &&
+    "name" in x &&
+    typeof x.name === "string"
+  ); // WRONG on purpose (unsound)
 }
 
 function exercise3(): string {
@@ -120,9 +128,9 @@ type User = { id: string; name: string };
  * Hint:
  *   function pluckId<T extends HasId>(x: T): string { ... }
  */
-function pluckId<T>(x: T): string {
+function pluckId<T extends HasId>(x: T): string {
   // TODO: remove any-cast by adding a generic constraint
-  return (x as any).id; // WRONG on purpose
+  return x.id; // WRONG on purpose
 }
 
 /**
@@ -136,11 +144,16 @@ function pluckId<T>(x: T): string {
  */
 function indexUsersById(users: User[]): Record<string, User> {
   // TODO: implement
-  return {}; // WRONG on purpose
+  let rec: Record<string, User> = {};
+  users.forEach((user) => (rec[user.id] = user));
+  return rec; // WRONG on purpose
 }
 
 class Session {
-  constructor(public id: string, public createdAtMs: number) {}
+  constructor(
+    public id: string,
+    public createdAtMs: number,
+  ) {}
 }
 
 function formatId(x: HasId): string {
